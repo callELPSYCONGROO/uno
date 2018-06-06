@@ -1,4 +1,4 @@
-package indi.smt.crawler.uno.model;
+package indi.smt.uno.crawler.qq_nab_img.model;
 
 import com.geccocrawler.gecco.annotation.Gecco;
 import com.geccocrawler.gecco.annotation.HtmlField;

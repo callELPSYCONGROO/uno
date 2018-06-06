@@ -24,11 +24,6 @@
             <artifactId>gecco</artifactId>
             <version>${gecco.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.geccocrawler</groupId>
-            <artifactId>gecco-redis</artifactId>
-            <version>${gecco.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>

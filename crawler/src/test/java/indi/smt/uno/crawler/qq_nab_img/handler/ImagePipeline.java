@@ -1,7 +1,7 @@
-package indi.smt.crawler.uno.handler;
+package indi.smt.uno.crawler.qq_nab_img.handler;
 
 import com.geccocrawler.gecco.pipeline.Pipeline;
-import indi.smt.crawler.uno.model.NbaBean;
+import indi.smt.uno.crawler.qq_nab_img.model.NbaBean;
 
 /**
  * ImagePipeline
