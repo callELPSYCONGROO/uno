@@ -2,8 +2,8 @@ package indi.smt.uno.crawler.photo;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import indi.smt.uno.crawler.common.CommonConstacts;
-import indi.smt.uno.crawler.page.handler.PaginationHandlerPipeline;
-import indi.smt.uno.crawler.photo.list.handler.PhotoTableHandlerPipeline;
+import indi.smt.uno.crawler.service.page.handler.PaginationHandlerPipeline;
+import indi.smt.uno.crawler.service.photo.list.handler.PhotoTableHandlerPipeline;
 
 /**
  * PhotoApplicationTest

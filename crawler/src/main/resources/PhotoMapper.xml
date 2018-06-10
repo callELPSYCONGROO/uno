@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!--相当于UserMapper接口的实现 namespace必须是UserMapper类路径-->
+<mapper namespace="indi.smt.uno.crawler.dao.PhotoDao">
+    <resultMap id="photo" type="indi.smt.uno.crawler.entity.Photo">
+        <id property="id" column="id" javaType="java.lang.Integer"/>
+        <result property="titel" column="titel" javaType="java.lang.String"/>
+        <result property="uri" column="uri" javaType="java.lang.String"/>
+        <result property="cls" column="cls" javaType="java.lang.String"/>
+        <result property="isShow" column="isShow" javaType="java.lang.Integer"/>
+        <result property="insertTime" column="insertTime" javaType="java.util.Date" />
+        <result property="createTime" column="createTime" javaType="java.util.Date" />
+    </resultMap>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM photo
+    </select>
+
+</mapper>

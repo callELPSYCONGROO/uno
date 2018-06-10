@@ -1,0 +1,24 @@
+CREATE DATABASE `uno` CHARACTER SET utf8mb4;
+
+CREATE TABLE `uno`.`novel`( 
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, 
+	`title` VARCHAR(128) NOT NULL COMMENT '标题', 
+	`content` TEXT NOT NULL COMMENT '内容', 
+	`insertTime` DATETIME COMMENT '插入时间', 
+	`author` VARCHAR(32) COMMENT '作者', 
+	`cls` VARCHAR(10) COMMENT '分类', 
+	`isShow` INT(2) DEFAULT 1 COMMENT '是否显示', 
+	`createTime` DATETIME COMMENT '创建时间', 
+	PRIMARY KEY (`id`) 
+) ENGINE=INNODB CHARSET=utf8mb4; 
+
+CREATE TABLE `uno`.`photo`( 
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, 
+	`title` VARCHAR(32) NOT NULL COMMENT '标题', 
+	`uri` VARCHAR(256) NOT NULL COMMENT '地址', 
+	`cls` VARCHAR(10) COMMENT '分类', 
+	`insertTime` DATETIME COMMENT '插入时间', 
+	`createTime` DATETIME COMMENT '创建时间', 
+	`isShow` INT(2) UNSIGNED DEFAULT 1 COMMENT '是否显示', 
+	PRIMARY KEY (`id`) 
+) ENGINE=INNODB CHARSET=utf8mb4; 

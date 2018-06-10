@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!--相当于UserMapper接口的实现 namespace必须是UserMapper类路径-->
+<mapper namespace="indi.smt.uno.crawler.dao.NovelDao">
+    <resultMap id="novel" type="indi.smt.uno.crawler.entity.Novel">
+        <id property="id" column="id" javaType="java.lang.Integer"/>
+        <result property="title" column="title" javaType="java.lang.String"/>
+        <result property="content" column="content" javaType="java.lang.String"/>
+        <result property="author" column="author" javaType="java.lang.String"/>
+        <result property="cls" column="cls" javaType="java.lang.String"/>
+        <result property="isShow" column="isShow" javaType="java.lang.Integer"/>
+        <result property="insertTime" column="insertTime" javaType="java.util.Date"/>
+        <result property="createTime" column="createTime" javaType="java.util.Date"/>
+    </resultMap>
+
+    <sql id="ALL_COLUMNS">
+        `id`, `title`, `content`, `author`, `cls`, `isShow`, `insertTime`, `createTime`
+    </sql>
+
+    <sql id="ALL_COLUMNS_TO_SHOW">
+        `title`, `content`, `author`, `cls`, `createTime`
+    </sql>
+
+    <insert id="insert" parameterType="indi.smt.uno.crawler.entity.Novel" useGeneratedKeys="true" keyProperty="id">
+        insert into `novel` (
+        <trim suffixOverrides=",">
+          <if test="title != null">`title`,</if>
+          <if test="content != null">`content`,</if>
+          <if test="author != null">`author`,</if>
+          <if test="cls != null">`cls`,</if>
+          <if test="isShow != null">`isShow`,</if>
+          <if test="insertTime != null">`insertTime`,</if>
+          <if test="createTime != null">`createTime`,</if>
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="author != null">#{author},</if>
+            <if test="cls != null">#{cls},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="insertTime != null">#{insertTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+        )
+    </insert>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM novel
+    </select>
+
+    <select id="selectAll" resultType="indi.smt.uno.crawler.entity.Novel">
+        SELECT <include refid="ALL_COLUMNS_TO_SHOW"/> FROM novel WHERE `isShow` = 1
+    </select>
+
+</mapper>

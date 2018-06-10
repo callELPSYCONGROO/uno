@@ -2,10 +2,10 @@ package indi.smt.uno.crawler;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import indi.smt.uno.crawler.common.CommonConstacts;
-import indi.smt.uno.crawler.nav.handler.WebPageHandlerPipeline;
-import indi.smt.uno.crawler.novel.list.handler.NovelTableHandlerPipeline;
-import indi.smt.uno.crawler.page.handler.PaginationHandlerPipeline;
-import indi.smt.uno.crawler.photo.list.handler.PhotoTableHandlerPipeline;
+import indi.smt.uno.crawler.service.nav.handler.WebPageHandlerPipeline;
+import indi.smt.uno.crawler.service.novel.list.handler.NovelTableHandlerPipeline;
+import indi.smt.uno.crawler.service.page.handler.PaginationHandlerPipeline;
+import indi.smt.uno.crawler.service.photo.list.handler.PhotoTableHandlerPipeline;
 
 /**
  * 爬虫启动类
@@ -17,7 +17,7 @@ public class UnoCrawlerApplication {
 		System.out.println("---------获取分类导航URL---------");
 		// 首页->分类导航栏
 		GeccoEngine.create()
-				.classpath("indi.smt.uno.crawler.nav")
+				.classpath("indi.smt.uno.crawler.service.nav")
 				.start(CommonConstacts.BASE_URL)
 				.interval(2000)
 				.run(); // 使用阻塞线程，将所有分类获取完成之后再开始下一步
@@ -25,7 +25,7 @@ public class UnoCrawlerApplication {
 		System.out.println("---------获取分页信息URL---------");
 		// 分页信息
 		GeccoEngine.create()
-				.classpath("indi.smt.uno.crawler.page")
+				.classpath("indi.smt.uno.crawler.service.page")
 				.start(WebPageHandlerPipeline.photoCategories.toArray(new String[0]))
 				.interval(2000)
 				.thread(CommonConstacts.segmentation(WebPageHandlerPipeline.photoCategories, 20))
@@ -37,14 +37,14 @@ public class UnoCrawlerApplication {
 			// 图片列表 -> 详情
 			// 获取列表
 			GeccoEngine.create()
-					.classpath("indi.smt.uno.crawler.photo.list")
+					.classpath("indi.smt.uno.crawler.service.photo.list")
 					.start(PaginationHandlerPipeline.photoPaginationUrlList.toArray(new String[0]))
 					.interval(2000)
 					.thread(CommonConstacts.segmentation(PaginationHandlerPipeline.photoPaginationUrlList, 20))
 					.run();
 			// 获取详情
 			GeccoEngine.create()
-					.classpath("indi.smt.uno.crawler.photo.detail")
+					.classpath("indi.smt.uno.crawler.service.photo.detail")
 					.start(PhotoTableHandlerPipeline.photoDetailUrlList.toArray(new String[0]))
 					.interval(2000)
 					.thread(CommonConstacts.segmentation(PhotoTableHandlerPipeline.photoDetailUrlList, 20))
@@ -57,14 +57,14 @@ public class UnoCrawlerApplication {
 			// 小说列表 -> 详情
 			// 获取列表
 			GeccoEngine.create()
-					.classpath("indi.smt.uno.crawler.novel.list")
+					.classpath("indi.smt.uno.crawler.service.novel.list")
 					.start(PaginationHandlerPipeline.novelPaginationUrlList.toArray(new String[0]))
 					.interval(2000)
 					.thread(CommonConstacts.segmentation(PaginationHandlerPipeline.novelPaginationUrlList, 20))
 					.run();
 			// 获取详情
 			GeccoEngine.create()
-					.classpath("indi.smt.uno.crawler.novel.detail")
+					.classpath("indi.smt.uno.crawler.service.novel.detail")
 					.start(NovelTableHandlerPipeline.novelDetailUrlList.toArray(new String[0]))
 					.interval(2000)
 					.thread(CommonConstacts.segmentation(NovelTableHandlerPipeline.novelDetailUrlList, 20))

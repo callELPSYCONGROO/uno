@@ -2,8 +2,8 @@ package indi.smt.uno.crawler.novel;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import indi.smt.uno.crawler.common.CommonConstacts;
-import indi.smt.uno.crawler.novel.list.handler.NovelTableHandlerPipeline;
-import indi.smt.uno.crawler.page.handler.PaginationHandlerPipeline;
+import indi.smt.uno.crawler.service.novel.list.handler.NovelTableHandlerPipeline;
+import indi.smt.uno.crawler.service.page.handler.PaginationHandlerPipeline;
 
 /**
  * NovelApplicationTest
