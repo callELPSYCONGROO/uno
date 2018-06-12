@@ -1,19 +1,22 @@
-package indi.smt.uno.crawler.common;
+package indi.smt.uno.crawler.dao;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * @author SwordNoTrace
  * @date 2018/6/10 22:28
  */
-public class SqlSessionUtil {
+public class SqlSessionUtil implements Closeable {
 
 	private static SqlSessionFactory sqlSessionFactory;
+
+	private SqlSession sqlSession;
 
 	static {
 		try {
@@ -23,15 +26,20 @@ public class SqlSessionUtil {
 		}
 	}
 
-	public static SqlSession get() {
+	public SqlSessionUtil() {
+		sqlSession = getNewSqlSession();
+	}
+
+	public static SqlSession getNewSqlSession() {
 		return sqlSessionFactory.openSession(true);
 	}
 
-	public static <T> T getDao(Class<T> tClass) {
-		return get().getMapper(tClass);
+	public <T> T getDao(Class<T> tClass) {
+		return sqlSession.getMapper(tClass);
 	}
 
-	public static void close(SqlSession sqlSession) {
+	@Override
+	public void close() {
 		sqlSession.close();
 	}
 }
