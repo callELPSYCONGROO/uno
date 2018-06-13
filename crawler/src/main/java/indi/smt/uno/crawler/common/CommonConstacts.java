@@ -13,6 +13,12 @@ public class CommonConstacts {
 	 * 爬取网页首页
 	 */
 	public final static String BASE_URL = "http://www.9191ss.com/";
+	public final static String DOMAIN = "9191ss.com";
+
+	/** 显示 */
+	public final static Integer SHOW = 1;
+	/** 隐藏 */
+	public final static Integer HIDDEN = 2;
 
 	/**
 	 * 组装分页路径

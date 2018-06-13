@@ -1,17 +1,269 @@
-<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <!--相当于UserMapper接口的实现 namespace必须是UserMapper类路径-->
-<mapper namespace="indi.smt.uno.crawler.dao.PhotoDao">
-    <resultMap id="photo" type="indi.smt.uno.crawler.entity.Photo">
-        <id property="id" column="id" javaType="java.lang.Integer"/>
-        <result property="titel" column="titel" javaType="java.lang.String"/>
-        <result property="uri" column="uri" javaType="java.lang.String"/>
-        <result property="cls" column="cls" javaType="java.lang.String"/>
-        <result property="isShow" column="isShow" javaType="java.lang.Integer"/>
-        <result property="insertTime" column="insertTime" javaType="java.util.Date" />
-        <result property="createTime" column="createTime" javaType="java.util.Date" />
-    </resultMap>
-
-    <select id="count" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM photo
-    </select>
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="indi.smt.uno.crawler.dao.PhotoMapper" >
+  <resultMap id="BaseResultMap" type="indi.smt.uno.crawler.entity.Photo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cateId" property="cateId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="insertTime" property="insertTime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="isShow" property="isShow" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, cateId, title, insertTime, createTime, isShow
+  </sql>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="indi.smt.uno.crawler.entity.PhotoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from photo
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from photo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from photo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="indi.smt.uno.crawler.entity.PhotoCriteria" >
+    delete from photo
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="indi.smt.uno.crawler.entity.Photo" >
+    insert into photo (id, cateId, title, 
+      insertTime, createTime, isShow
+      )
+    values (#{id,jdbcType=INTEGER}, #{cateId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{insertTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{isShow,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="indi.smt.uno.crawler.entity.Photo" >
+    insert into photo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cateId != null" >
+        cateId,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="insertTime != null" >
+        insertTime,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="isShow != null" >
+        isShow,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cateId != null" >
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="indi.smt.uno.crawler.entity.PhotoCriteria" resultType="java.lang.Integer" >
+    select count(*) from photo
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update photo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cateId != null" >
+        cateId = #{record.cateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertTime != null" >
+        insertTime = #{record.insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isShow != null" >
+        isShow = #{record.isShow,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update photo
+    set id = #{record.id,jdbcType=INTEGER},
+      cateId = #{record.cateId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      insertTime = #{record.insertTime,jdbcType=TIMESTAMP},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      isShow = #{record.isShow,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="indi.smt.uno.crawler.entity.Photo" >
+    update photo
+    <set >
+      <if test="cateId != null" >
+        cateId = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        insertTime = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isShow != null" >
+        isShow = #{isShow,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="indi.smt.uno.crawler.entity.Photo" >
+    update photo
+    set cateId = #{cateId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      insertTime = #{insertTime,jdbcType=TIMESTAMP},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      isShow = #{isShow,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="Model_Where_Clause" >
+    <where >
+      <if test="id != null" >
+         and id=#{id}
+      </if>
+      <if test="cateId != null" >
+         and cateId=#{cateId}
+      </if>
+      <if test="title != null" >
+         and title=#{title}
+      </if>
+      <if test="insertTime != null" >
+         and insertTime=#{insertTime}
+      </if>
+      <if test="createTime != null" >
+         and createTime=#{createTime}
+      </if>
+      <if test="isShow != null" >
+         and isShow=#{isShow}
+      </if>
+    </where>
+  </sql>
+  <select id="countByModel" parameterType="indi.smt.uno.crawler.entity.Photo" resultType="java.lang.Integer" >
+    select count(*) from photo
+    <if test="_parameter != null" >
+      <include refid="Model_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="indi.smt.uno.crawler.entity.Photo" >
+    select
+    <include refid="Base_Column_List" />
+    from photo
+    <if test="_parameter != null" >
+      <include refid="Model_Where_Clause" />
+    </if>
+  </select>
+  <cache />
 </mapper>

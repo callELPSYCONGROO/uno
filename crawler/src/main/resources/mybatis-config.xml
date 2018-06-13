@@ -15,5 +15,6 @@
     <mappers>
         <mapper resource="NovelMapper.xml"/>
         <mapper resource="PhotoMapper.xml"/>
+        <mapper resource="CategoryMapper.xml"/>
     </mappers>
 </configuration>
