@@ -155,7 +155,17 @@
       </if>
     </trim>
   </insert>
-  <select id="countByCriteria" parameterType="indi.smt.uno.crawler.entity.PhotoCriteria" resultType="java.lang.Integer" >
+    <insert id="insertBatch" parameterType="indi.smt.uno.crawler.entity.Photo">
+    insert into photo
+      (cateId, title, insertTime, createTime, isShow)
+    values
+      <foreach collection="list" item="photo" separator=",">
+      (#{photo.cateId,jdbcType=INTEGER}, #{photo.title,jdbcType=VARCHAR},
+      #{photo.insertTime,jdbcType=TIMESTAMP}, #{photo.createTime,jdbcType=TIMESTAMP}, #{photo.isShow,jdbcType=INTEGER}
+      )
+      </foreach>
+    </insert>
+    <select id="countByCriteria" parameterType="indi.smt.uno.crawler.entity.PhotoCriteria" resultType="java.lang.Integer" >
     select count(*) from photo
     <if test="_parameter != null" >
       <include refid="Criteria_Where_Clause" />
