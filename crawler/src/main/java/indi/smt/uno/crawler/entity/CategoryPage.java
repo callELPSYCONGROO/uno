@@ -4,7 +4,7 @@ import com.geccocrawler.gecco.annotation.*;
 import com.geccocrawler.gecco.request.HttpRequest;
 import com.geccocrawler.gecco.spider.HrefBean;
 import com.geccocrawler.gecco.spider.HtmlBean;
-import indi.smt.uno.crawler.common.CommonConstacts;
+import indi.smt.uno.crawler.common.CommonUtil;
 import lombok.Data;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2019/4/9 23:50
  */
 @Data
-@Gecco(matchUrl = CommonConstacts.BASE_URL + CommonConstacts.NAVI_CATEGORY_MATCH, pipelines = {"categoryPagePipeline", "consolePipeline"})
+@Gecco(matchUrl = CommonUtil.BASE_URL + CommonUtil.NAVI_CATEGORY_MATCH, pipelines = {"categoryPagePipeline", "consolePipeline"})
 public class CategoryPage implements HtmlBean {
 
 	/** 分类[-页数] */
@@ -26,9 +26,14 @@ public class CategoryPage implements HtmlBean {
 	@HtmlField(cssPath = ".thumb-content a")
 	private List<HrefBean> vodhtmlList;
 
+	/** 分页信息 */
 	@Text
 	@HtmlField(cssPath = ".pagination")
 	private List<String> pagination;
+
+	@Attr("onclick")
+	@HtmlField(cssPath = ".pagebtn")
+	private String pagebtn;
 
 	/** 获取请求，创建派生请求 */
 	@Request

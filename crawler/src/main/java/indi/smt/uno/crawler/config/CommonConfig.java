@@ -2,7 +2,7 @@ package indi.smt.uno.crawler.config;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.spring.SpringGeccoEngine;
-import indi.smt.uno.crawler.common.CommonConstacts;
+import indi.smt.uno.crawler.common.CommonUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,7 +21,7 @@ public class CommonConfig {
 				GeccoEngine.create()
 						.pipelineFactory(springPipelineFactory)
 						.classpath("indi.smt.uno.crawler.entity")
-						.start(CommonConstacts.BASE_URL)
+						.start(CommonUtil.BASE_URL)
 						.interval(1000)
 						.start();
 			}

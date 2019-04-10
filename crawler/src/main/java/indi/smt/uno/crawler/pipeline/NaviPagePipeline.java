@@ -4,7 +4,7 @@ import com.geccocrawler.gecco.pipeline.Pipeline;
 import com.geccocrawler.gecco.request.HttpRequest;
 import com.geccocrawler.gecco.scheduler.DeriveSchedulerContext;
 import com.geccocrawler.gecco.spider.HrefBean;
-import indi.smt.uno.crawler.common.CommonConstacts;
+import indi.smt.uno.crawler.common.CommonUtil;
 import indi.smt.uno.crawler.entity.NaviPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class NaviPagePipeline implements Pipeline<NaviPage> {
 				.filter(category -> {
 					String uri = category.getUrl();
 					return !StringUtils.isEmpty(uri)
-							&& uri.matches(CommonConstacts.BASE_URL + CommonConstacts.NAVI_CATEGORY_REGEX);
+							&& uri.matches(CommonUtil.BASE_URL + CommonUtil.NAVI_CATEGORY_REGEX);
 				})
 				// 增加派生请求
 				.forEach(category -> DeriveSchedulerContext.into(currentRequest.subRequest(category.getUrl())));

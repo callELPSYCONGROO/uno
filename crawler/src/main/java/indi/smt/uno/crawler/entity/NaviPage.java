@@ -6,7 +6,7 @@ import com.geccocrawler.gecco.annotation.Request;
 import com.geccocrawler.gecco.request.HttpRequest;
 import com.geccocrawler.gecco.spider.HrefBean;
 import com.geccocrawler.gecco.spider.HtmlBean;
-import indi.smt.uno.crawler.common.CommonConstacts;
+import indi.smt.uno.crawler.common.CommonUtil;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2019/4/9 22:55
  */
 @Data
-@Gecco(matchUrl = CommonConstacts.BASE_URL, pipelines = {"naviPagePipeline", "consolePipeline"})
+@Gecco(matchUrl = CommonUtil.BASE_URL, pipelines = {"naviPagePipeline", "consolePipeline"})
 public class NaviPage implements HtmlBean {
 
 	/** 分类菜单 */
