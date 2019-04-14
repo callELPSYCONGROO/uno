@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&useSSL=false}
+    username: ${DATASOURCE_USERNAME:demo}
+    password: ${DATASOURCE_PASSWORD:demo}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST:127.0.0.1}
+    port: ${RABBITMQ_PORT:5672}
+    publisher-confirms: true
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}

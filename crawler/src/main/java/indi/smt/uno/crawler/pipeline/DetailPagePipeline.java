@@ -90,6 +90,6 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 		}
 		VideoInfo videoInfo = new VideoInfo(title, category, url, date);
 		System.out.println("发送消息：" + videoInfo);
-		msgSender.sendVideoUrl(videoInfo);
+		msgSender.send(videoInfo);
 	}
 }

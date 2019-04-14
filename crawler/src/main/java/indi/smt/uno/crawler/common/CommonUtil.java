@@ -31,7 +31,11 @@ public class CommonUtil {
 
 	public final static String SCRIPT_SRC_REGEX = "/upload/playdata/.*\\.js";
 
-	public final static String VIDEO_DOWNLOAD_URL_QUEUE = "video_download_url";
+	public final static String FANOUT_SAVE = "fanout.save";
+
+	public final static String FANOUT_DOWNLOAD = "fanout.download";
+
+	public final static String FANOUTEXCHANGE = "fanoutExchange";
 
 	/**
 	 * 返回分页信息参数

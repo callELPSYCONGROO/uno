@@ -1,4 +1,4 @@
-package indi.smt.uno.download.common;
+package indi.smt.uno.save.common;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -9,7 +9,7 @@ import java.io.StringWriter;
  */
 public class CommonUtil {
 
-	public final static String FANOUT_DOWNLOAD = "fanout.download";
+	public final static String FANOUT_SAVE = "fanout.save";
 
 	public static String exceptionString(Throwable e) {
 		StringWriter stringWriter = new StringWriter();

@@ -1,7 +1,7 @@
-package indi.smt.uno.download.msg;
+package indi.smt.uno.save.msg;
 
-import indi.smt.uno.download.common.CommonUtil;
-import indi.smt.uno.download.entity.VideoInfo;
+import indi.smt.uno.save.common.CommonUtil;
+import indi.smt.uno.save.entity.VideoInfo;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/4/14 20:19
  */
 @Component
-@RabbitListener(queues = CommonUtil.FANOUT_DOWNLOAD)
+@RabbitListener(queues = CommonUtil.FANOUT_SAVE)
 public class MsgListener {
 
 	@RabbitHandler
