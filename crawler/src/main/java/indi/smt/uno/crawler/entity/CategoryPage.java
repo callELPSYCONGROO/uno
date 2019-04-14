@@ -15,12 +15,8 @@ import java.util.List;
  * @date 2019/4/9 23:50
  */
 @Data
-@Gecco(matchUrl = CommonUtil.BASE_URL + CommonUtil.NAVI_CATEGORY_MATCH, pipelines = {"categoryPagePipeline", "consolePipeline"})
+@Gecco(matchUrl = CommonUtil.BASE_URL + CommonUtil.NAVI_CATEGORY_MATCH, pipelines = {"categoryPagePipeline"})
 public class CategoryPage implements HtmlBean {
-
-	/** 分类[-页数] */
-	@RequestParameter("pageId")
-	private String pageId;
 
 	/** 当前分页的视频页面 */
 	@HtmlField(cssPath = ".thumb-content a")

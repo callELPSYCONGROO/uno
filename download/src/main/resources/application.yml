@@ -6,6 +6,3 @@ spring:
     username: ${RABBITMQ_USERNAME:guest}
     password: ${RABBITMQ_PASSWORD:guest}
 
-gecco:
-  thread: ${GECCO_THREAD:10}
-  interval: ${GECCO_INTERVAL:1000}

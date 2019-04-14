@@ -1,5 +1,9 @@
 package indi.smt.uno.crawler.common;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +26,12 @@ public class CommonUtil {
 	public final static String PAGEBTN_REGEX = "pagego\\('/vodtypehtml/\\d+-\\{pg}\\.html',20\\)";
 
 	public final static String PAGEBTN = "/vodtypehtml/{categoryId}-{pg}.html";
+
+	public final static String DETAIL_URL_REGEX = "https://usa-10.us/vodplayhtml/{0}.html?{1}-1-1";
+
+	public final static String SCRIPT_SRC_REGEX = "/upload/playdata/.*\\.js";
+
+	public final static String VIDEO_DOWNLOAD_URL_QUEUE = "video_download_url";
 
 	/**
 	 * 返回分页信息参数
@@ -60,5 +70,26 @@ public class CommonUtil {
 		}
 		String categoryId = matcher1.group();
 		return PAGEBTN.replace("{categoryId}", categoryId).replace("{pg}", String.valueOf(nextPage));
+	}
+
+	public static String analysisUrl(String encodeUrl) throws UnsupportedEncodingException {
+		String[] jsLine = encodeUrl.split(",");
+		String uri = null;
+		for (int i = jsLine.length - 1; i >= 0; i--) {
+			String expression = jsLine[i];
+			String expressionValue = expression.split("=")[1];
+			if (expressionValue.startsWith("unescape")) {
+				String replace = expressionValue.replace("');", "");
+				String encodeUri = replace.substring(replace.indexOf("https"));
+				uri = URLDecoder.decode(encodeUri, "UTF-8");
+			}
+		}
+		return uri;
+	}
+
+	public static String exceptionString(Throwable e) {
+		StringWriter stringWriter = new StringWriter();
+		e.printStackTrace(new PrintWriter(stringWriter, true));
+		return stringWriter.toString();
 	}
 }

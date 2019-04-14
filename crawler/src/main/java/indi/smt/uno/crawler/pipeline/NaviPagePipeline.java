@@ -6,7 +6,6 @@ import com.geccocrawler.gecco.scheduler.DeriveSchedulerContext;
 import com.geccocrawler.gecco.spider.HrefBean;
 import indi.smt.uno.crawler.common.CommonUtil;
 import indi.smt.uno.crawler.entity.NaviPage;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -18,7 +17,6 @@ import java.util.List;
  * @author 無痕剑
  * @date 2019/4/9 23:20
  */
-@Slf4j
 @Service("naviPagePipeline")
 public class NaviPagePipeline implements Pipeline<NaviPage> {
 
