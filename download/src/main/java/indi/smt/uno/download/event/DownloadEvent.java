@@ -16,8 +16,14 @@ public class DownloadEvent extends ApplicationEvent {
 
 	private List<String> segmentationList;
 
-	public DownloadEvent(Object source, List<String> segmentationList) {
+	private String title;
+
+	private String category;
+
+	public DownloadEvent(Object source, String title, String category, List<String> segmentationList) {
 		super(source);
+		this.title = title;
+		this.category = category;
 		this.segmentationList = segmentationList;
 	}
 }

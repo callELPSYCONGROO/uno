@@ -23,7 +23,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
@@ -67,6 +66,10 @@ public class HttpUtil {
 		return httpPost(url, params, null, true);
 	}
 
+	public static InputStream httpsPostForInputStream(String url, Map<String, Object> config) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+		return httpPostForEntity(url, null, config, true).getContent();
+	}
+
 	public static HttpEntity httpGetForEntity(String url, HashMap<String, Object> maps, boolean https) throws IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 		// 创建HttpClient上下文
 		HttpClientContext context = HttpClientContext.create();
@@ -105,9 +108,9 @@ public class HttpUtil {
 
 		//response
 		CloseableHttpResponse response = httpClient.execute(httpGet, context);
-		//释放连接
-		httpGet.releaseConnection();
-		httpClient.close();
+		//释放连接，下载时不能关闭
+//		httpGet.releaseConnection();
+//		httpClient.close();
 
 		return response.getEntity();
 	}
@@ -163,7 +166,11 @@ public class HttpUtil {
 
 	}
 
-	public static String httpPost(String url, HashMap<String, String> params, HashMap<String, Object> config, boolean https) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
+	public static String httpPost(String url, Map<String, String> params, Map<String, Object> config, boolean https) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
+		return EntityUtils.toString(httpPostForEntity(url, params, config, https));
+	}
+
+	public static HttpEntity httpPostForEntity(String url, Map<String, String> params, Map<String, Object> config, boolean https) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
 		HttpClient httpClient;
 
 		if (https) {
@@ -206,24 +213,17 @@ public class HttpUtil {
 		//set params post参数
 		List<NameValuePair> listParams = new ArrayList<>();
 
-		//添加post参数
-		for (Map.Entry<String, String> entry : params.entrySet()) {
-			listParams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-		}
-		String result = "";
-		try {
-			//response
-			httpPost.setEntity(new UrlEncodedFormEntity(listParams, "UTF-8"));
-			HttpResponse response = httpClient.execute(httpPost);
+//		//添加post参数
+//		for (Map.Entry<String, String> entry : params.entrySet()) {
+//			listParams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+//		}
+		//response
+		httpPost.setEntity(new UrlEncodedFormEntity(listParams, "UTF-8"));
 
-			HttpEntity entity = response.getEntity();
-			result = EntityUtils.toString(entity, "UTF-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			httpPost.releaseConnection();
-			((CloseableHttpClient) httpClient).close();
-		}
-		return result;
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		httpPost.releaseConnection();
+		((CloseableHttpClient) httpClient).close();
+
+		return httpResponse.getEntity();
 	}
 }
