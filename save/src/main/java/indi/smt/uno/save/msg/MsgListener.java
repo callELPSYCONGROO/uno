@@ -1,9 +1,15 @@
 package indi.smt.uno.save.msg;
 
+import com.alibaba.fastjson.JSON;
 import indi.smt.uno.save.common.CommonUtil;
+import indi.smt.uno.save.dao.VideoRepository;
+import indi.smt.uno.save.entity.Video;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * @author 無痕剑
@@ -13,8 +19,25 @@ import org.springframework.stereotype.Component;
 @RabbitListener(queues = CommonUtil.VIDEO_SAVE)
 public class MsgListener {
 
+	private final VideoRepository videoRepository;
+
+	@Autowired
+	public MsgListener(VideoRepository videoRepository) {
+		this.videoRepository = videoRepository;
+	}
+
 	@RabbitHandler
 	public void videoDownloadUrlListener(String message) {
 		System.out.println("接受到消息：" + message);
+		try {
+			Video video = JSON.parseObject(message, Video.class);
+			video.setCreateTime(new Date());
+			video.setIsShow(1);
+			videoRepository.save(video);
+		} catch (Exception e) {
+			System.out.println("持久化消息发生异常--------->");
+			System.out.println(CommonUtil.exceptionString(e));
+			throw e;
+		}
 	}
 }

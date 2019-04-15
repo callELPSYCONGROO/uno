@@ -11,6 +11,8 @@ public class CommonUtil {
 
 	public final static String VIDEO_DOWNLOAD = "video.download";
 
+	public final static String BASE_URL = "https://usa-10.us";
+
 	public static String exceptionString(Throwable e) {
 		StringWriter stringWriter = new StringWriter();
 		e.printStackTrace(new PrintWriter(stringWriter, true));
