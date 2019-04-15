@@ -1,5 +1,6 @@
 package indi.smt.uno.crawler.pipeline;
 
+import com.alibaba.fastjson.JSON;
 import com.geccocrawler.gecco.pipeline.Pipeline;
 import indi.smt.uno.crawler.common.CommonUtil;
 import indi.smt.uno.crawler.common.HttpUtil;
@@ -88,8 +89,8 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 					date = videoDesc.getDiv();
 			}
 		}
-		VideoInfo videoInfo = new VideoInfo(title, category, url, date);
-		System.out.println("发送消息：" + videoInfo);
-		msgSender.send(videoInfo);
+		String msg = JSON.toJSONString(new VideoInfo(title, category, url, date));
+		System.out.println("发送消息：" + msg);
+		msgSender.send(msg);
 	}
 }

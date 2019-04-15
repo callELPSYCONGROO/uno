@@ -3,10 +3,7 @@ package indi.smt.uno.crawler.config;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.spring.SpringGeccoEngine;
 import indi.smt.uno.crawler.common.CommonUtil;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,31 +37,31 @@ public class CommonConfig {
 		};
 	}
 
-	@Bean("fanoutDownload")
-	public Queue fanoutDownload() {
-		return new Queue(CommonUtil.FANOUT_DOWNLOAD);
+	@Bean("downloadQueue")
+	public Queue downloadQueue() {
+		return new Queue(CommonUtil.VIDEO_DOWNLOAD);
 	}
 
-	@Bean("fanoutSave")
-	public Queue fanoutSave() {
-		return new Queue(CommonUtil.FANOUT_SAVE);
+	@Bean("saveQueue")
+	public Queue saveQueue() {
+		return new Queue(CommonUtil.VIDEO_SAVE);
 	}
 
-	@Bean("fanoutExchange")
-	FanoutExchange fanoutExchange() {
-		return new FanoutExchange(CommonUtil.FANOUTEXCHANGE);
-	}
-
-	@Bean
-	Binding bindingExchangeFanoutSave(Queue fanoutSave,
-	                         FanoutExchange fanoutExchange) {
-		return BindingBuilder.bind(fanoutSave).to(fanoutExchange);
+	@Bean("videoTopicExchange")
+	TopicExchange videoTopicExchange() {
+		return new TopicExchange(CommonUtil.VIDEO_TOPIC_EXCHANGE);
 	}
 
 	@Bean
-	Binding bindingExchangeFanoutDownload(Queue fanoutDownload,
-	                         FanoutExchange fanoutExchange) {
-		return BindingBuilder.bind(fanoutDownload).to(fanoutExchange);
+	Binding bindingExchangeSave(Queue saveQueue,
+	                            TopicExchange videoTopicExchange) {
+		return BindingBuilder.bind(saveQueue).to(videoTopicExchange).with(CommonUtil.ROUTING_KEY);
+	}
+
+	@Bean
+	Binding bindingExchangeDownload(Queue downloadQueue,
+	                                TopicExchange videoTopicExchange) {
+		return BindingBuilder.bind(downloadQueue).to(videoTopicExchange).with(CommonUtil.ROUTING_KEY);
 	}
 
 }

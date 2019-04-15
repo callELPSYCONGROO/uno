@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2019/4/9 23:50
  */
 @Data
-@Gecco(matchUrl = CommonUtil.BASE_URL + CommonUtil.NAVI_CATEGORY_MATCH, pipelines = {"categoryPagePipeline"})
+@Gecco(matchUrl = CommonUtil.BASE_URL + CommonUtil.NAVI_CATEGORY_MATCH, pipelines = {"categoryPagePipeline", "consolePipeline"})
 public class CategoryPage implements HtmlBean {
 
 	/** 当前分页的视频页面 */

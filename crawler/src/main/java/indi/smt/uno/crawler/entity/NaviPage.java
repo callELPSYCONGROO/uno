@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2019/4/9 22:55
  */
 @Data
-@Gecco(matchUrl = CommonUtil.BASE_URL, pipelines = {"naviPagePipeline"})
+@Gecco(matchUrl = CommonUtil.BASE_URL, pipelines = {"naviPagePipeline", "consolePipeline"})
 public class NaviPage implements HtmlBean {
 
 	/** 分类菜单 */

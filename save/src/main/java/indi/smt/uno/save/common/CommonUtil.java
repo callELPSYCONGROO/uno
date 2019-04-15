@@ -9,7 +9,7 @@ import java.io.StringWriter;
  */
 public class CommonUtil {
 
-	public final static String FANOUT_SAVE = "fanout.save";
+	public final static String VIDEO_SAVE = "video.save";
 
 	public static String exceptionString(Throwable e) {
 		StringWriter stringWriter = new StringWriter();

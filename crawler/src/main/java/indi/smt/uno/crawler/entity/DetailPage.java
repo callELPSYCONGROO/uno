@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2019/4/14 16:17
  */
 @Data
-@Gecco(matchUrl = "https://usa-10.us/vodplayhtml/{pageIdHtml}", pipelines = {"detailPagePipeline"})
+@Gecco(matchUrl = "https://usa-10.us/vodplayhtml/{pageIdHtml}", pipelines = {"detailPagePipeline", "consolePipeline"})
 public class DetailPage implements HtmlBean {
 
 	@Attr("src")

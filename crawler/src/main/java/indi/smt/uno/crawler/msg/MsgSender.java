@@ -19,10 +19,7 @@ public class MsgSender {
 		this.amqpTemplate = amqpTemplate;
 	}
 
-	/**
-	 * 广播
-	 */
-	public void send(Object msg) {
-		amqpTemplate.convertAndSend(CommonUtil.FANOUTEXCHANGE, "", msg);
+	public void send(String msg) {
+		amqpTemplate.convertAndSend(CommonUtil.VIDEO_TOPIC_EXCHANGE, CommonUtil.ROUTING_KEY, msg);
 	}
 }
