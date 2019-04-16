@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+    <!-- HEADER -->
+    <div class="row header-top">
+        <div class="col-lg-3 col-md-6 col-sm-5 col-xs-8">
+            <a class="main-logo" href="#"><img src="/static/img/main-logo.png" class="main-logo img-responsive"
+                                               alt="Muvee Reviews" title="Muvee Reviews"></a>
+        </div>
+        <div class="col-lg-6 hidden-md text-center hidden-sm hidden-xs">
+            <img src="/static/img/banners/banner-sm.jpg" class="img-responsive"
+                 alt="Muvee Reviews Video Magazine HTML5 Bootstrap">
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-7 hidden-xs">
+            <div class="right-box">
+                <button type="button" class="access-btn" data-toggle="modal" data-target="#enquirypopup">
+                    get free access
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- MENU -->
+    <div class="row home-mega-menu ">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse"
+                            data-target=".js-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse js-navbar-collapse megabg dropshd ">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/index">首页</a></li>
+
+                        <li><a href="/category">分类</a></li>
+                        <li><a href="single-video.html">Video Post</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <ul class="social">
+                        <li class="social-facebook"><a href="#" class="fa fa-facebook social-icons"></a></li>
+                        <li class="social-google-plus"><a href="#" class="fa fa-google-plus social-icons"></a></li>
+                        <li class="social-twitter"><a href="#" class="fa fa-twitter social-icons"></a></li>
+                        <li class="social-youtube"><a href="#" class="fa fa-youtube social-icons"></a></li>
+                        <li class="social-rss"><a href="#" class="fa fa-rss social-icons"></a></li>
+                    </ul>
+                    <div class="search-block">
+                        <form>
+                            <input type="search" placeholder="Search">
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+</html>

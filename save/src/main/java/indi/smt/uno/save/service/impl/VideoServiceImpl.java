@@ -44,7 +44,7 @@ public class VideoServiceImpl implements VideoService {
 				return;
 			}
 			video.setCreateTime(new Date());
-			video.setIsShow(1);
+			video.setIsShow(2);
 			Video oldVideo = videoRepository.findByTitleAndCategory(video.getTitle(), video.getCategory());
 			if (oldVideo != null) {
 				return;

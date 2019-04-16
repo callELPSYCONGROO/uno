@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: showtime
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&useSSL=false}
+    username: ${DATASOURCE_USERNAME:demo}
+    password: ${DATASOURCE_PASSWORD:demo}
+  thymeleaf:
+    suffix: .html
+    prefix: classpath:/templates/
+    # 启用MVC Thymeleaf视图分辨率
+    enabled: true
+    # 检查模板是否存在，然后再呈现
+    check-template-location: true
+    # thymeleaf缓存
+    cache: false
+    # 编码
+    encoding: utf-8
+    servlet:
+      content-type: text/html;charset=utf-8
+  mvc:
+    static-path-pattern: /static/**
