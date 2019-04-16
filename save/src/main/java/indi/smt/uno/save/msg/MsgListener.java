@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -27,12 +28,17 @@ public class MsgListener {
 	}
 
 	@RabbitHandler
+	@Transactional(rollbackFor = Exception.class)
 	public void videoDownloadUrlListener(String message) {
 		System.out.println("接受到消息：" + message);
 		try {
 			Video video = JSON.parseObject(message, Video.class);
 			video.setCreateTime(new Date());
 			video.setIsShow(1);
+			Video oldVideo = videoRepository.findByTitleAndCategory(video.getTitle(), video.getCategory());
+			if (oldVideo != null) {
+				return;
+			}
 			videoRepository.save(video);
 		} catch (Exception e) {
 			System.out.println("持久化消息发生异常--------->");

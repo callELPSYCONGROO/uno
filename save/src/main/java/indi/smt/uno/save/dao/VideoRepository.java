@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface VideoRepository extends JpaRepository<Video, Long> {
+
+	Video findByTitleAndCategory(String title, String category);
 }
