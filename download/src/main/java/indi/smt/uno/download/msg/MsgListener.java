@@ -54,8 +54,9 @@ public class MsgListener {
 
 		String segmentationUrl = null;
 		for (String infoLine : info.split("\n")) {
-			if (infoLine.startsWith("#")) {
-				segmentationUrl = CommonUtil.DOWNLOAD_BASE_URL + infoLine;
+			if (!infoLine.startsWith("#")) {
+				segmentationUrl = CommonUtil.changeUrlPath(download, infoLine);
+				break;
 			}
 		}
 		if (StringUtils.isEmpty(segmentationUrl)) {
@@ -69,11 +70,12 @@ public class MsgListener {
 			throw new RuntimeException("------------>请求数据接口发生异常：\n" + CommonUtil.exceptionString(e));
 		}
 
+		String finalSegmentationUrl = segmentationUrl;
 		List<String> segmentationList = Arrays.stream(segmentationInfo.split("\n"))
 				// 去掉已#开头的行
 				.filter(line -> !line.startsWith("#"))
 				// 拼接成下载地址
-				.map(line -> CommonUtil.DOWNLOAD_BASE_URL + line)
+				.map(line -> CommonUtil.changeUrlPath(finalSegmentationUrl, line))
 				.collect(Collectors.toList());
 
 		// 交给其他线程下载

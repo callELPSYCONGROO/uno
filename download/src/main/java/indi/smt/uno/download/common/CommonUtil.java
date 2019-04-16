@@ -18,4 +18,8 @@ public class CommonUtil {
 		e.printStackTrace(new PrintWriter(stringWriter, true));
 		return stringWriter.toString();
 	}
+
+	public static String changeUrlPath(String url, String path) {
+		return url.substring(0, url.lastIndexOf("/") + 1) + path;
+	}
 }

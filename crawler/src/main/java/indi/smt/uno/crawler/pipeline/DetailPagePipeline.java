@@ -90,7 +90,7 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 					date = videoDesc.getDiv();
 			}
 		}
-		String datetime = LocalDate.now().getYear() + "-" + date + "00:00:00";
+		String datetime = LocalDate.now().getYear() + "-" + date + " 00:00:00";
 		String msg = JSON.toJSONString(new VideoInfo(title, category, url, datetime));
 		System.out.println("发送消息：" + msg);
 		msgSender.send(msg);

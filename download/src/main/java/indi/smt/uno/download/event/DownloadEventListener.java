@@ -46,11 +46,13 @@ public class DownloadEventListener {
 		for (List<String> partition : partitionList) {
 			Callable<Boolean> runnable = () -> {
 				for (String segmentation : partition) {
+					String fileName = null;
 					try {
 						InputStream inputStream = HttpUtil.httpsGetForInputstream(segmentation);
-						write(inputStream, prefix + segmentation.substring(segmentation.lastIndexOf("/") + 1));
+						fileName = prefix + segmentation.substring(segmentation.lastIndexOf("/") + 1);
+						write(inputStream, fileName);
 					} catch (Exception e) {
-						System.out.println("**************下载文件，写文件发生异常：");
+						System.out.println("<" + fileName + "><" + segmentation +">------------>下载文件，写文件发生异常：");
 						System.out.println(CommonUtil.exceptionString(e));
 					}
 				}
@@ -61,8 +63,8 @@ public class DownloadEventListener {
 
 		// 执行线程
 		try {
-			executorService.invokeAny(callableList, 10, TimeUnit.MINUTES);
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {
+			executorService.invokeAll(callableList, 10, TimeUnit.MINUTES);
+		} catch (InterruptedException e) {
 			System.out.println("线程执行发生错误----------->");
 			System.out.println(CommonUtil.exceptionString(e));
 		}
