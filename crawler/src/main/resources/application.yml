@@ -5,6 +5,19 @@ spring:
     publisher-confirms: true
     username: ${RABBITMQ_USERNAME:guest}
     password: ${RABBITMQ_PASSWORD:guest}
+  mail:
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          starttls:
+            required: true
+            enable: true
+          auth: true
+    password: ${MAIL_PASSWORD:password}
+    username: ${MAIL_USERNAME:mail@host.com}
+    host: ${MAIL_HOST:mail.host.com}
+    recipient: ${MAIL_RECIPIENT:who.mail}
 
 gecco:
   thread: ${GECCO_THREAD:10}
