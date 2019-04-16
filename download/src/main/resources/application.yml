@@ -6,3 +6,5 @@ spring:
     username: ${RABBITMQ_USERNAME:guest}
     password: ${RABBITMQ_PASSWORD:guest}
 
+download:
+  base-path: ${DOWNLOAD_BASE_PATH:C:\\Users\\mayh0\\Desktop}

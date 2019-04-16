@@ -3,6 +3,7 @@ package indi.smt.uno.download.event;
 import indi.smt.uno.download.common.CommonUtil;
 import indi.smt.uno.download.common.HttpUtil;
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ import java.util.concurrent.*;
  */
 @Component
 public class DownloadEventListener {
+
+	@Value("${download.base-path}")
+	private String basePath;
 
 	@EventListener(DownloadEvent.class)
 	@Async
@@ -37,7 +41,7 @@ public class DownloadEventListener {
 		// 线程集合
 		List<Callable<Boolean>> callableList = new ArrayList<>();
 		// 文件名前缀
-		String prefix = System.getProperty("user.dir") + File.separator + "video" + File.separator + event.getCategory() + File.separator + event.getTitle() + File.separator;
+		String prefix = basePath + File.separator + "video" + File.separator + event.getCategory() + File.separator + event.getTitle() + File.separator;
 
 		for (List<String> partition : partitionList) {
 			Callable<Boolean> runnable = () -> {
@@ -66,7 +70,12 @@ public class DownloadEventListener {
 
 	private void write(InputStream is, String fileName) throws IOException {
 		BufferedInputStream in = new BufferedInputStream(is);
-		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(fileName));
+		// 创建目录
+		File dir = new File(fileName.substring(0, fileName.lastIndexOf(File.separator)));
+		if (dir.mkdirs()) {
+			System.out.println("创建下载目录\"" + dir.getPath() + "\"成功--------------->");
+		}
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(fileName)));
 		int len;
 		byte[] b = new byte[1024];
 		while ((len = in.read(b)) != -1) {
