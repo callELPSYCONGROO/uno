@@ -3,6 +3,7 @@ package indi.smt.uno.crawler.config;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.spring.SpringGeccoEngine;
 import indi.smt.uno.crawler.common.CommonUtil;
+import indi.smt.uno.crawler.event.GeccoStatusListener;
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,7 @@ public class CommonConfig {
 	private int interval;
 
 	@Bean
-	public SpringGeccoEngine springGeccoEngine() {
+	public SpringGeccoEngine springGeccoEngine(GeccoStatusListener geccoStatusListener) {
 		return new SpringGeccoEngine() {
 			@Override
 			public void init() {
@@ -32,6 +33,8 @@ public class CommonConfig {
 						.start(CommonUtil.BASE_URL)
 						.thread(threadCount)
 						.interval(interval)
+						.setEventListener(geccoStatusListener)
+						.loop(false)
 						.start();
 			}
 		};

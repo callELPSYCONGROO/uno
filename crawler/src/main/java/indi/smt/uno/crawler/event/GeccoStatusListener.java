@@ -30,5 +30,6 @@ public class GeccoStatusListener extends SimpleEventListener {
 	public void onStop(GeccoEngine ge) {
 		System.out.println("****************爬取【" + CommonUtil.BASE_URL + "】内容完成");
 		mailHelper.send("【UNO】爬取网页信息完成", "爬取【" + CommonUtil.BASE_URL + "】内容完成");
+		System.exit(0);
 	}
 }

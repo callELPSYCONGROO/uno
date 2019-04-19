@@ -18,7 +18,14 @@ spring:
     username: ${MAIL_USERNAME:mail@host.com}
     host: ${MAIL_HOST:mail.host.com}
     recipient: ${MAIL_RECIPIENT:who.mail}
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&useSSL=false}
+    username: ${DATASOURCE_USERNAME:demo}
+    password: ${DATASOURCE_PASSWORD:demo}
 gecco:
   thread: ${GECCO_THREAD:10}
   interval: ${GECCO_INTERVAL:1000}

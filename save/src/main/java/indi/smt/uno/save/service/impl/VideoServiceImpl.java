@@ -47,6 +47,7 @@ public class VideoServiceImpl implements VideoService {
 			video.setIsShow(2);
 			Video oldVideo = videoRepository.findByTitleAndCategory(video.getTitle(), video.getCategory());
 			if (oldVideo != null) {
+				System.out.println("视频【" + video.getTitle() + "】已存在，忽略");
 				return;
 			}
 			videoRepository.save(video);
