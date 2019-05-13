@@ -2,6 +2,7 @@ package indi.smt.uno.download;
 
 import org.apache.commons.collections4.ListUtils;
 import org.junit.Test;
+import org.springframework.util.FileSystemUtils;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -191,5 +192,29 @@ public class MergeFile {
 		}
 		fileOutputStream.close();
 		fileOutputChannl.close();
+	}
+
+	@Test
+	public void del() {
+		File file = new File("E:\\video");
+		File[] oneFiles = file.listFiles();
+		if (oneFiles == null) {
+			System.out.println("一级目录为空");
+			return;
+		}
+		Arrays.stream(oneFiles).parallel()
+				.forEach(oneFile -> {
+					File[] twoFiles = oneFile.listFiles();
+					if (twoFiles != null) {
+						Arrays.stream(twoFiles).parallel()
+								.forEach(twoFile -> {
+									if (!twoFile.getName().endsWith(".mp4")) {
+										System.out.println("删除：" + twoFile.getName() + "：" + FileSystemUtils.deleteRecursively(twoFile));
+									}
+								});
+					} else {
+						System.out.println("目录【" + oneFile.getName() + "】为空");
+					}
+				});
 	}
 }
