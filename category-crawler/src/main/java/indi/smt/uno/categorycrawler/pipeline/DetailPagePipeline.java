@@ -55,7 +55,8 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 		String name = category + "-" + title;
 		System.out.println("开始获取视频【" + name + "】下载连接");
 
-		String pageId = bean.getPageIdHtml().split(".")[0];
+		String requestUrl = bean.getRequest().getUrl();
+		String pageId = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.lastIndexOf("."));
 		String src = bean.getScriptSrcList().stream()
 				.filter(scriptSrc -> scriptSrc.contains(pageId))
 				.findFirst()
@@ -66,7 +67,7 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 
 		String jsUrl = CommonUtil.BASE_URL + src;
 		String js;
-		String url = null;
+		String videoUrl = null;
 		try {
 			js = HttpUtil.httpsGetForString(jsUrl);
 		} catch (KeyManagementException | NoSuchAlgorithmException | IOException | KeyStoreException e) {
@@ -86,7 +87,7 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 				String replace = kv[1].replace("');", "");
 				String encodeUri = replace.substring(replace.indexOf("https"));
 				try {
-					url = URLDecoder.decode(encodeUri, "UTF-8");
+					videoUrl = URLDecoder.decode(encodeUri, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					System.out.println("**************************************");
 					System.out.println("解码URI发生异常：");
@@ -97,12 +98,12 @@ public class DetailPagePipeline implements Pipeline<DetailPage> {
 			}
 		}
 
-		if (StringUtils.isEmpty(url)) {
+		if (StringUtils.isEmpty(videoUrl)) {
 			return;
 		}
 
 		String datetime = LocalDate.now().getYear() + "-" + date + " 00:00:00";
-		String msg = JSON.toJSONString(new VideoInfo(title, category, url, datetime));
+		String msg = JSON.toJSONString(new VideoInfo(title, category, videoUrl, datetime));
 		System.out.println("发送消息：" + name);
 		msgSender.send(msg);
 	}

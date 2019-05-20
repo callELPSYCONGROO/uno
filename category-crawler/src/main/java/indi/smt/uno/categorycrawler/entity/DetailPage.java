@@ -3,7 +3,8 @@ package indi.smt.uno.categorycrawler.entity;
 import com.geccocrawler.gecco.annotation.Attr;
 import com.geccocrawler.gecco.annotation.Gecco;
 import com.geccocrawler.gecco.annotation.HtmlField;
-import com.geccocrawler.gecco.annotation.RequestParameter;
+import com.geccocrawler.gecco.annotation.Request;
+import com.geccocrawler.gecco.request.HttpRequest;
 import com.geccocrawler.gecco.spider.HtmlBean;
 import lombok.Data;
 
@@ -24,6 +25,6 @@ public class DetailPage implements HtmlBean {
 	@HtmlField(cssPath = ".row")
 	private List<VideoDesc> videoDescList;
 
-	@RequestParameter
-	private String pageIdHtml;
+	@Request
+	private HttpRequest request;
 }

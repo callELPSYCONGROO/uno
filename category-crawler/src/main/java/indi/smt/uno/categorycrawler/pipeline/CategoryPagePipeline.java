@@ -2,9 +2,9 @@ package indi.smt.uno.categorycrawler.pipeline;
 
 import com.geccocrawler.gecco.pipeline.Pipeline;
 import com.geccocrawler.gecco.request.HttpRequest;
+import com.geccocrawler.gecco.scheduler.DeriveSchedulerContext;
 import indi.smt.uno.categorycrawler.common.CommonUtil;
 import indi.smt.uno.categorycrawler.entity.CategoryPage;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -26,11 +26,9 @@ public class CategoryPagePipeline implements Pipeline<CategoryPage> {
 		}
 		HttpRequest request = bean.getRequest();
 		detailHrefList.forEach(href -> {
-			String categoryId = CommonUtil.getCategoryId(href);
-			if (StringUtils.isNotBlank(categoryId)) {
-				String detailUrl = MessageFormat.format(CommonUtil.DETAIL_URL_REGEX, categoryId, categoryId);
-				request.subRequest(detailUrl);
-			}
+			String categoryId = href.substring(href.lastIndexOf("/") + 1, href.lastIndexOf("."));
+			String detailUrl = MessageFormat.format(CommonUtil.DETAIL_URL_REGEX, categoryId, categoryId);
+			DeriveSchedulerContext.into(request.subRequest(detailUrl));
 		});
 	}
 }

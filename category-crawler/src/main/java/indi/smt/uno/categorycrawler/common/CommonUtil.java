@@ -35,7 +35,7 @@ public class CommonUtil {
 
 	public final static String ROUTING_KEY = "video.#";
 
-	public final static String CATEGORY_ID = "/vodhtml/\\d.html";
+	public final static String CATEGORY_ID = "/vodhtml/\\d+.html";
 
 	public final static String SCRIPT_SRC_REGEX = "/upload/playdata/.*\\.js";
 
@@ -101,8 +101,9 @@ public class CommonUtil {
 
 	public static String getCategoryId(String href) {
 		Matcher matcher = Pattern.compile(CATEGORY_ID).matcher(href);
-		if (matcher.find()) {
-			return matcher.group();
+		Matcher matcher1 = Pattern.compile("\\d+").matcher(href);
+		if (matcher.find() && matcher1.find()) {
+			return matcher1.group();
 		}
 		return null;
 	}

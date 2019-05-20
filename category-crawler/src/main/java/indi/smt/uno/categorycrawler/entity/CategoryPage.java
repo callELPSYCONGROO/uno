@@ -19,10 +19,6 @@ import java.util.List;
 @Gecco(matchUrl = CommonUtil.CATEGORY_URL, pipelines = {"categoryPagePipeline", "consolePipeline"})
 public class CategoryPage implements HtmlBean {
 
-//	/** 请求中的参数 */
-//	@RequestParameter
-//	private String categoryAndPageNumHtml;
-
 	/** 获取请求，创建派生请求 */
 	@Request
 	private HttpRequest request;
