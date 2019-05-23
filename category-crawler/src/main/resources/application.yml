@@ -9,3 +9,5 @@ spring:
 gecco:
   thread: ${GECCO_THREAD:50}
   interval: ${GECCO_INTERVAL:1000}
+  category-id: ${GECCO_CATEGORY_ID:23,24}
+  max-page: ${GECCO_MAX_PAGE:50}

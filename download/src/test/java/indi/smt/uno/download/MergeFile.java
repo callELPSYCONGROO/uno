@@ -139,7 +139,7 @@ public class MergeFile {
 		}
 	}
 
-	public void mergeCategoryVideo(File file) {
+	private void mergeCategoryVideo(File file) {
 		File[] files = file.listFiles();
 		if (files == null || files.length == 0) {
 			System.out.println("没文件");
@@ -147,6 +147,7 @@ public class MergeFile {
 		}
 		Arrays.asList(files)
 				.parallelStream()
+				.filter(File::isDirectory)
 				.forEach(f -> {
 					long s = System.currentTimeMillis();
 					try {
@@ -161,11 +162,14 @@ public class MergeFile {
 	}
 
 	private void mergeTs2Mp4(File[] files, String fileName) throws IOException {
+		if (files == null || files.length == 0) {
+			return;
+		}
 		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fileName));
 		for (File file : files) {
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
 			int len;
-			byte[] bytes = new byte[10240];
+			byte[] bytes = new byte[5120];
 			while ((len = bufferedInputStream.read(bytes)) != -1) {
 				bufferedOutputStream.write(bytes, 0, len);
 			}
@@ -195,7 +199,7 @@ public class MergeFile {
 	}
 
 	@Test
-	public void del() {
+	public void deleteVideo() {
 		File file = new File("E:\\video");
 		File[] oneFiles = file.listFiles();
 		if (oneFiles == null) {
@@ -207,14 +211,34 @@ public class MergeFile {
 					File[] twoFiles = oneFile.listFiles();
 					if (twoFiles != null) {
 						Arrays.stream(twoFiles).parallel()
-								.forEach(twoFile -> {
-									if (!twoFile.getName().endsWith(".mp4")) {
-										System.out.println("删除：" + twoFile.getName() + "：" + FileSystemUtils.deleteRecursively(twoFile));
-									}
-								});
+								.forEach(this::deleteDirectory);
 					} else {
 						System.out.println("目录【" + oneFile.getName() + "】为空");
 					}
 				});
+	}
+
+	@Test
+	public void deleteCategory() {
+		File file = new File("E:\\video\\欧美猛男");
+		File[] fileListInCategory = file.listFiles();
+		if (fileListInCategory == null) {
+			System.out.println("分类目录为空");
+			return;
+		}
+		Arrays.stream(fileListInCategory).parallel()
+				.forEach(this::deleteDirectory);
+	}
+
+	private void deleteDirectory(File file) {
+		if (!file.getName().endsWith(".mp4")) {
+			System.out.println("删除：" + file.getName() + "：" + FileSystemUtils.deleteRecursively(file));
+		}
+	}
+
+	@Test
+	public void mergeSingeCategoryTest() {
+		File file = new File("E:\\video\\日本有码");
+		mergeCategoryVideo(file);
 	}
 }
